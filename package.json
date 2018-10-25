@@ -1,0 +1,45 @@
+{
+  "name": "swipe-detect",
+  "version": "1.0.0",
+  "description": "A touchevent swipe detection utility for JavaScript applications.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhfen/swipe-detect.git"
+  },
+  "keywords": [
+    "swipe",
+    "detect",
+    "touch",
+    "touchevent",
+    "direction"
+  ],
+  "author": "Matt Fender <mhfender@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mhfen/swipe-detect/issues"
+  },
+  "homepage": "https://github.com/mhfen/swipe-detect#readme",
+  "devDependencies": {
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.7.0",
+    "jest": "^23.6.0",
+    "jest-puppeteer": "^3.4.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+    },
+    "moduleNameMapper": {
+      "^~/(.*)$": "<rootDir>/$1"
+    },
+    "preset": "jest-puppeteer"
+  }
+}
