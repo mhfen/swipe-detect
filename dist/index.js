@@ -12,6 +12,9 @@ class SwipeDetect {
     this.callback = callback;
     this.threshold = threshold;
 
+    this.recordTouchStartValues = this.recordTouchStartValues.bind(this);
+    this.detectSwipeDirection = this.detectSwipeDirection.bind(this);
+
     this.enable();
   }
 
