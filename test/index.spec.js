@@ -135,4 +135,25 @@ describe('Swipe Detect', () => {
 
     expect(theSwipe).toEqual('up');
   });
+
+  it('event listener bindings should have a correct scope', (done) => {
+    const callback = () => done();
+    const threshold = 150;
+    const TARGET = document.createElement('div');
+    swipeDetect(TARGET, callback, threshold);
+
+    TARGET.dispatchEvent(new TouchEvent('touchstart', {
+      changedTouches: [{
+        'pageX': 200,
+        'pageY': 200,
+      }]
+    }));
+
+    TARGET.dispatchEvent(new TouchEvent('touchend', {
+      changedTouches: [{
+        'pageX': 200,
+        'pageY': 400,
+      }]
+    }));
+  });
 });
