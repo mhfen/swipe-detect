@@ -21,8 +21,8 @@ class SwipeDetect {
    * @name enable
    */
   enable() {
-    this.target.addEventListener('touchstart', this.recordTouchStartValues);
-    this.target.addEventListener('touchend', this.detectSwipeDirection);
+    this.target.addEventListener('touchstart', this.recordTouchStartValues.bind(this));
+    this.target.addEventListener('touchend', this.detectSwipeDirection.bind(this));
   }
 
   /**
@@ -32,8 +32,8 @@ class SwipeDetect {
    * @name disable
    */
   disable() {
-    this.target.removeEventListener('touchstart', this.recordTouchStartValues);
-    this.target.removeEventListener('touchend', this.detectSwipeDirection);
+    this.target.removeEventListener('touchstart', this.recordTouchStartValues.bind(this));
+    this.target.removeEventListener('touchend', this.detectSwipeDirection.bind(this));
   }
 
   /**
