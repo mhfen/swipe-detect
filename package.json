@@ -1,6 +1,6 @@
 {
   "name": "swipe-detect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A touchevent swipe detection utility for JavaScript applications.",
   "main": "dist/index.js",
   "scripts": {
