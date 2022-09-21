@@ -11,6 +11,7 @@ class SwipeDetect {
     this.target = target;
     this.callback = callback;
     this.threshold = threshold;
+    this.events = [];
 
     this.enable();
   }
@@ -21,8 +22,9 @@ class SwipeDetect {
    * @name enable
    */
   enable() {
-    this.target.addEventListener('touchstart', this.recordTouchStartValues.bind(this));
-    this.target.addEventListener('touchend', this.detectSwipeDirection.bind(this));
+    this.events = [this.recordTouchStartValues.bind(this), this.detectSwipeDirection.bind(this)];
+    this.target.addEventListener('touchstart', this.events[0]);
+    this.target.addEventListener('touchend', this.events[1]);
   }
 
   /**
@@ -32,8 +34,9 @@ class SwipeDetect {
    * @name disable
    */
   disable() {
-    this.target.removeEventListener('touchstart', this.recordTouchStartValues.bind(this));
-    this.target.removeEventListener('touchend', this.detectSwipeDirection.bind(this));
+    this.target.removeEventListener('touchstart', this.events[0]);
+    this.target.removeEventListener('touchend', this.events[1]);
+    this.events = [];
   }
 
   /**
