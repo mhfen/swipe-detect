@@ -1,16 +1,10 @@
-/**
- * Used to ignore longer touches that are probably not
- * meant as a swipe by the user
- *
- * @constant ALLOWED_SWIPE_TIME
- */
-const ALLOWED_SWIPE_TIME = 300;
-
 class SwipeDetect {
-  constructor(target, callback, threshold) {
+  constructor(target, callback, threshold, allowedSwipeTime) {
     this.target = target;
     this.callback = callback;
     this.threshold = threshold;
+    this.allowedSwipeTime = allowedSwipeTime;
+    this.events = [];
 
     this.enable();
   }
@@ -21,8 +15,12 @@ class SwipeDetect {
    * @name enable
    */
   enable() {
-    this.target.addEventListener('touchstart', this.recordTouchStartValues.bind(this));
-    this.target.addEventListener('touchend', this.detectSwipeDirection.bind(this));
+    this.events = [
+      this.recordTouchStartValues.bind(this),
+      this.detectSwipeDirection.bind(this),
+    ];
+    this.target.addEventListener('touchstart', this.events[0]);
+    this.target.addEventListener('touchend', this.events[1]);
   }
 
   /**
@@ -32,8 +30,9 @@ class SwipeDetect {
    * @name disable
    */
   disable() {
-    this.target.removeEventListener('touchstart', this.recordTouchStartValues.bind(this));
-    this.target.removeEventListener('touchend', this.detectSwipeDirection.bind(this));
+    this.target.removeEventListener('touchstart', this.events[0]);
+    this.target.removeEventListener('touchend', this.events[1]);
+    this.events = [];
   }
 
   /**
@@ -66,9 +65,9 @@ class SwipeDetect {
     const absY = Math.abs(distY);
     const elapsedTime = new Date().getTime() - this.startTime;
 
-    if (elapsedTime > ALLOWED_SWIPE_TIME) return;
+    if (elapsedTime > this.allowedSwipeTime) return;
 
-    switch(true) {
+    switch (true) {
       case absX >= this.threshold && absX > absY && distX < 0:
         this.callback('left');
         break;
@@ -93,8 +92,14 @@ class SwipeDetect {
  * @param {Object} target [DOM element for detection]
  * @param {function} callback [The function receiving direction]
  * @param {Int} threshold [the minimum pixels the swipe must have traveled to trigger detection]
+ * @param {Int} allowedSwipeTime [Used to ignore longer touches that are probably not meant as a swipe by the user]
  * @returns {Class}
  */
-export default function(target, callback, threshold=150) {
-  return new SwipeDetect(target, callback, threshold);
+export default function (
+  target,
+  callback,
+  threshold = 150,
+  allowedSwipeTime = 500
+) {
+  return new SwipeDetect(target, callback, threshold, allowedSwipeTime);
 }
